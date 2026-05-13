@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Epifanía Diseño — Accesorios Exclusivos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --verde: #2d3b2e;
+    --verde-claro: #4a5e4b;
+    --dorado: #c9a96e;
+    --dorado-claro: #e8d5b0;
+    --crema: #f5f0e8;
+    --crema-oscura: #ede6d6;
+    --blanco: #faf8f4;
+    --oscuro: #1a1a18;
+    --gris: #8a8a82;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--blanco);
+    color: var(--oscuro);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    background: rgba(250, 248, 244, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid rgba(201, 169, 110, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: var(--verde);
+    text-decoration: none;
+  }
+
+  .nav-logo span {
+    color: var(--dorado);
+    font-style: italic;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--oscuro);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--dorado); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-cart {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--oscuro);
+    text-decoration: none;
+    border: 0.5px solid var(--dorado);
+    padding: 0.5rem 1.2rem;
+    transition: all 0.3s;
+  }
+
+  .nav-cart:hover {
+    background: var(--dorado);
+    color: var(--blanco);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 5rem;
+  }
+
+  .hero-left {
+    background: var(--verde);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: -10%;
+    width: 70%;
+    height: 70%;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 169, 110, 0.15);
+  }
+
+  .hero-left::after {
+    content: '';
+    position: absolute;
+    bottom: -10%;
+    right: -5%;
+    width: 50%;
+    height: 50%;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 169, 110, 0.1);
+  }
+
+  .hero-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--crema);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--dorado-claro);
+  }
+
+  .hero-desc {
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: rgba(245, 240, 232, 0.6);
+    max-width: 340px;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--crema);
+    text-decoration: none;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+    transition: gap 0.3s;
+  }
+
+  .hero-cta:hover { gap: 1.5rem; }
+
+  .hero-cta::after {
+    content: '→';
+    color: var(--dorado);
+    font-size: 1rem;
+  }
+
+  .hero-right {
+    background: var(--crema);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--crema-oscura) 0%, var(--crema) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .hero-circle {
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: var(--verde);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    animation: scaleIn 1s ease 0.5s forwards;
+  }
+
+  .hero-circle-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--crema);
+    letter-spacing: 0.1em;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .hero-circle-text span {
+    display: block;
+    font-size: 0.8rem;
+    font-family: 'Jost', sans-serif;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-top: 0.5rem;
+  }
+
+  /* STRIP */
+  .strip {
+    background: var(--dorado);
+    padding: 1rem 0;
+    overflow: hidden;
+  }
+
+  .strip-inner {
+    display: flex;
+    gap: 4rem;
+    animation: scroll 20s linear infinite;
+    white-space: nowrap;
+  }
+
+  .strip-item {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--verde);
+    flex-shrink: 0;
+  }
+
+  /* COLECCIÓN */
+  .coleccion {
+    padding: 8rem 4rem;
+    background: var(--blanco);
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+  }
+
+  .section-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--oscuro);
+  }
+
+  .section-title em { font-style: italic; }
+
+  .ver-todo {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--oscuro);
+    text-decoration: none;
+    border-bottom: 0.5px solid var(--dorado);
+    padding-bottom: 2px;
+    transition: color 0.3s;
+  }
+
+  .ver-todo:hover { color: var(--dorado); }
+
+  .productos-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .producto-card {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  .producto-card:hover { transform: translateY(-6px); }
+
+  .producto-img {
+    aspect-ratio: 3/4;
+    background: var(--crema);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1.2rem;
+  }
+
+  .producto-img-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--crema-oscura);
+    transition: transform 0.5s ease;
+  }
+
+  .producto-card:hover .producto-img-inner { transform: scale(1.04); }
+
+  .producto-icon {
+    font-size: 3rem;
+    opacity: 0.3;
+    color: var(--verde);
+  }
+
+  .producto-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: var(--verde);
+    color: var(--crema);
+    padding: 0.35rem 0.75rem;
+  }
+
+  .producto-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--oscuro);
+    margin-bottom: 0.3rem;
+  }
+
+  .producto-material {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--gris);
+    margin-bottom: 0.6rem;
+  }
+
+  .producto-precio {
+    font-size: 0.85rem;
+    color: var(--dorado);
+    font-weight: 400;
+  }
+
+  /* BANNER */
+  .banner {
+    background: var(--verde);
+    padding: 8rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .banner-left .section-tag { color: var(--dorado); }
+
+  .banner-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 4vw, 3.8rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--crema);
+    margin-bottom: 1.5rem;
+  }
+
+  .banner-title em { font-style: italic; color: var(--dorado-claro); }
+
+  .banner-desc {
+    font-size: 0.85rem;
+    line-height: 1.9;
+    color: rgba(245, 240, 232, 0.6);
+    margin-bottom: 2.5rem;
+  }
+
+  .btn-dorado {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    background: var(--dorado);
+    color: var(--verde);
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+
+  .btn-dorado:hover {
+    background: var(--dorado-claro);
+    transform: translateY(-2px);
+  }
+
+  .banner-right {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .banner-stat {
+    border: 0.5px solid rgba(201, 169, 110, 0.3);
+    padding: 2rem;
+  }
+
+  .banner-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--dorado);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .banner-stat-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    color: rgba(245, 240, 232, 0.5);
+    text-transform: uppercase;
+  }
+
+  /* CATEGORÍAS */
+  .categorias {
+    padding: 8rem 4rem;
+    background: var(--crema);
+  }
+
+  .categorias-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1.5rem;
+    margin-top: 4rem;
+  }
+
+  .cat-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .cat-card:first-child {
+    grid-row: 1 / 3;
+  }
+
+  .cat-img {
+    aspect-ratio: 4/3;
+    background: var(--verde-claro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: transform 0.5s ease;
+  }
+
+  .cat-card:first-child .cat-img {
+    aspect-ratio: unset;
+    height: 100%;
+  }
+
+  .cat-card:hover .cat-img { transform: scale(1.04); }
+
+  .cat-label {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+  }
+
+  .cat-label-tag {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 0.3rem;
+  }
+
+  .cat-label-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--crema);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--oscuro);
+    padding: 5rem 4rem 2rem;
+    color: rgba(245, 240, 232, 0.5);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+  }
+
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--crema);
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .footer-brand span { color: var(--dorado); font-style: italic; }
+
+  .footer-desc {
+    font-size: 0.8rem;
+    line-height: 1.9;
+    color: rgba(245, 240, 232, 0.4);
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-location {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--dorado);
+  }
+
+  .footer-col h4 {
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--crema);
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer-col a {
+    font-size: 0.8rem;
+    color: rgba(245, 240, 232, 0.4);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-col a:hover { color: var(--dorado); }
+
+  .footer-bottom {
+    border-top: 0.5px solid rgba(245, 240, 232, 0.08);
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-copy {
+    font-size: 0.72rem;
+    color: rgba(245, 240, 232, 0.2);
+    letter-spacing: 0.05em;
+  }
+
+  /* CARRITO SIDEBAR */
+  .carrito-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 26, 24, 0.5);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .carrito-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .carrito-sidebar {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: 420px;
+    background: var(--blanco);
+    z-index: 201;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem;
+  }
+
+  .carrito-overlay.open .carrito-sidebar {
+    transform: translateX(0);
+  }
+
+  .carrito-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 0.5px solid var(--crema-oscura);
+  }
+
+  .carrito-titulo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--oscuro);
+  }
+
+  .carrito-cerrar {
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--gris);
+    background: none;
+    border: none;
+    transition: color 0.3s;
+  }
+
+  .carrito-cerrar:hover { color: var(--oscuro); }
+
+  .carrito-vacio {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: var(--gris);
+  }
+
+  .carrito-vacio-icon { font-size: 3rem; opacity: 0.3; }
+
+  .carrito-vacio p {
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+  }
+
+  .carrito-items { flex: 1; overflow-y: auto; }
+
+  .carrito-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 0.5px solid var(--crema-oscura);
+  }
+
+  .carrito-item-img {
+    width: 70px;
+    height: 70px;
+    background: var(--crema);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--verde);
+    opacity: 0.4;
+  }
+
+  .carrito-item-info { flex: 1; }
+
+  .carrito-item-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--oscuro);
+    margin-bottom: 0.25rem;
+  }
+
+  .carrito-item-precio {
+    font-size: 0.8rem;
+    color: var(--dorado);
+  }
+
+  .carrito-item-remove {
+    font-size: 0.7rem;
+    color: var(--gris);
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: color 0.3s;
+  }
+
+  .carrito-item-remove:hover { color: #c0392b; }
+
+  .carrito-footer {
+    border-top: 0.5px solid var(--crema-oscura);
+    padding-top: 1.5rem;
+  }
+
+  .carrito-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .carrito-total-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gris);
+  }
+
+  .carrito-total-precio {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    color: var(--oscuro);
+  }
+
+  .btn-pagar {
+    width: 100%;
+    padding: 1.1rem;
+    background: var(--verde);
+    color: var(--crema);
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .btn-pagar:hover { background: var(--verde-claro); }
+
+  /* ANIMACIONES */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">EPIF<span>A</span>NÍA</a>
+  <ul class="nav-links">
+    <li><a href="#coleccion">Colección</a></li>
+    <li><a href="#categorias">Categorías</a></li>
+    <li><a href="#">Nosotros</a></li>
+    <li><a href="#">Contacto</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#" class="nav-cart" onclick="abrirCarrito(event)">Carrito (0)</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-tag">Nueva colección 2025</p>
+    <h1 class="hero-title">
+      Accesorios que<br>
+      <em>definen</em><br>
+      tu esencia
+    </h1>
+    <p class="hero-desc">
+      Piezas únicas en bronce con baño en oro 24k. Diseño exclusivo desde Popayán para el mundo.
+    </p>
+    <a href="#coleccion" class="hero-cta">Explorar colección</a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-image-placeholder">
+      <div class="hero-circle">
+        <div class="hero-circle-text">
+          EPIFANÍA<br>
+          <span>Diseño</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-inner">
+    <span class="strip-item">Bronce con baño en oro 24k</span>
+    <span class="strip-item">✦</span>
+    <span class="strip-item">Piezas únicas</span>
+    <span class="strip-item">✦</span>
+    <span class="strip-item">Popayán — Colombia</span>
+    <span class="strip-item">✦</span>
+    <span class="strip-item">Envío a todo el país</span>
+    <span class="strip-item">✦</span>
+    <span class="strip-item">Diseño exclusivo</span>
+    <span class="strip-item">✦</span>
+    <span class="strip-item">Bronce con baño en oro 24k</span>
+    <span class="strip-item">✦</span>
+    <span class="strip-item">Piezas únicas</span>
+    <span class="strip-item">✦</span>
+    <span class="strip-item">Popayán — Colombia</span>
+    <span class="strip-item">✦</span>
+    <span class="strip-item">Envío a todo el país</span>
+    <span class="strip-item">✦</span>
+    <span class="strip-item">Diseño exclusivo</span>
+    <span class="strip-item">✦</span>
+  </div>
+</div>
+
+<!-- COLECCIÓN -->
+<section class="coleccion" id="coleccion">
+  <div class="section-header">
+    <div>
+      <p class="section-tag">Lo más nuevo</p>
+      <h2 class="section-title">Colección <em>destacada</em></h2>
+    </div>
+    <a href="#" class="ver-todo">Ver todo</a>
+  </div>
+  <div class="productos-grid" id="productos-grid">
+    <!-- productos generados por JS -->
+  </div>
+</section>
+
+<!-- BANNER -->
+<section class="banner">
+  <div class="banner-left">
+    <p class="section-tag">ComunidadEPF</p>
+    <h2 class="banner-title">Haz parte de<br>nuestra <em>comunidad</em></h2>
+    <p class="banner-desc">
+      Recibe diariamente lo mejor de nuestros accesorios, tips de estilo y asesoría en tiempo real a través de WhatsApp.
+    </p>
+    <a href="#" class="btn-dorado">Únete ahora</a>
+  </div>
+  <div class="banner-right">
+    <div class="banner-stat">
+      <div class="banner-stat-num">1.3K</div>
+      <div class="banner-stat-label">Seguidoras</div>
+    </div>
+    <div class="banner-stat">
+      <div class="banner-stat-num">400+</div>
+      <div class="banner-stat-label">Publicaciones</div>
+    </div>
+    <div class="banner-stat">
+      <div class="banner-stat-num">24k</div>
+      <div class="banner-stat-label">Baño en oro</div>
+    </div>
+    <div class="banner-stat">
+      <div class="banner-stat-num">∞</div>
+      <div class="banner-stat-label">Piezas únicas</div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORÍAS -->
+<section class="categorias" id="categorias">
+  <div class="section-header">
+    <div>
+      <p class="section-tag">Explorar</p>
+      <h2 class="section-title">Por <em>categoría</em></h2>
+    </div>
+  </div>
+  <div class="categorias-grid">
+    <div class="cat-card">
+      <div class="cat-img" style="background: var(--verde); min-height: 500px; display:flex; align-items:center; justify-content:center;">
+        <span style="font-family:'Cormorant Garamond',serif; font-size:5rem; color:rgba(245,240,232,0.1); font-style:italic;">Aretes</span>
+      </div>
+      <div class="cat-label">
+        <p class="cat-label-tag">La más popular</p>
+        <p class="cat-label-name">Aretes</p>
+      </div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-img" style="background: #5a4a35; display:flex; align-items:center; justify-content:center;">
+        <span style="font-family:'Cormorant Garamond',serif; font-size:3rem; color:rgba(245,240,232,0.1); font-style:italic;">Anillos</span>
+      </div>
+      <div class="cat-label">
+        <p class="cat-label-tag">Exclusivos</p>
+        <p class="cat-label-name">Anillos</p>
+      </div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-img" style="background: #3d4a3e; display:flex; align-items:center; justify-content:center;">
+        <span style="font-family:'Cormorant Garamond',serif; font-size:2.5rem; color:rgba(245,240,232,0.1); font-style:italic;">Collares</span>
+      </div>
+      <div class="cat-label">
+        <p class="cat-label-tag">Colección</p>
+        <p class="cat-label-name">Collares</p>
+      </div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-img" style="background: #6b5a3e; display:flex; align-items:center; justify-content:center;">
+        <span style="font-family:'Cormorant Garamond',serif; font-size:2.5rem; color:rgba(245,240,232,0.1); font-style:italic;">Brazaletes</span>
+      </div>
+      <div class="cat-label">
+        <p class="cat-label-tag">Nuevos</p>
+        <p class="cat-label-name">Brazaletes</p>
+      </div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-img" style="background: #4a3a4a; display:flex; align-items:center; justify-content:center;">
+        <span style="font-family:'Cormorant Garamond',serif; font-size:2rem; color:rgba(245,240,232,0.1); font-style:italic;">Gargantillas</span>
+      </div>
+      <div class="cat-label">
+        <p class="cat-label-tag">Tendencia</p>
+        <p class="cat-label-name">Gargantillas</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <p class="footer-brand">EPIF<span>A</span>NÍA</p>
+      <p class="footer-desc">Una selección exquisita de joyas y accesorios. Espacio interactivo de bienestar y estilo de vida.</p>
+      <p class="footer-location">📍 Showroom Cra 6 # 44N 16 La Ximena — Popayán, Col.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Tienda</h4>
+      <ul>
+        <li><a href="#">Nueva colección</a></li>
+        <li><a href="#">Aretes</a></li>
+        <li><a href="#">Anillos</a></li>
+        <li><a href="#">Collares</a></li>
+        <li><a href="#">Brazaletes</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Información</h4>
+      <ul>
+        <li><a href="#">Nosotros</a></li>
+        <li><a href="#">ComunidadEPF</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Contacto</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Ayuda</h4>
+      <ul>
+        <li><a href="#">Envíos</a></li>
+        <li><a href="#">Devoluciones</a></li>
+        <li><a href="#">Cuidado de piezas</a></li>
+        <li><a href="#">WhatsApp</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Epifanía Diseño. Todos los derechos reservados.</p>
+    <p class="footer-copy">@epifania.diseno</p>
+  </div>
+</footer>
+
+<!-- CARRITO -->
+<div class="carrito-overlay" id="carrito-overlay" onclick="cerrarCarrito(event)">
+  <div class="carrito-sidebar">
+    <div class="carrito-header">
+      <h2 class="carrito-titulo">Tu carrito</h2>
+      <button class="carrito-cerrar" onclick="cerrarCarrito()">✕</button>
+    </div>
+    <div class="carrito-items" id="carrito-items">
+      <div class="carrito-vacio" id="carrito-vacio">
+        <div class="carrito-vacio-icon">◯</div>
+        <p>Tu carrito está vacío</p>
+      </div>
+    </div>
+    <div class="carrito-footer" id="carrito-footer" style="display:none">
+      <div class="carrito-total">
+        <span class="carrito-total-label">Total</span>
+        <span class="carrito-total-precio" id="carrito-total">$0</span>
+      </div>
+      <button class="btn-pagar">Pagar con PSE / Tarjeta</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const productos = [
+  { id: 1, nombre: 'Aretes Ojo', material: 'Bronce con baño en oro 24k', precio: 85000, badge: 'Nuevo' },
+  { id: 2, nombre: 'Anillo Murralla', material: 'Bronce con baño en oro 24k · Piedra esmeralda', precio: 120000, badge: null },
+  { id: 3, nombre: 'Gargantilla Snake', material: 'Bronce con baño en oro 24k', precio: 95000, badge: 'Favorito' },
+  { id: 4, nombre: 'Anillo Sphere', material: 'Bronce con baño en oro 24k', precio: 110000, badge: null },
+];
+
+let carrito = [];
+
+function formatPrecio(p) {
+  return '$' + p.toLocaleString('es-CO');
+}
+
+function renderProductos() {
+  const grid = document.getElementById('productos-grid');
+  grid.innerHTML = productos.map(p => `
+    <div class="producto-card" onclick="agregarAlCarrito(${p.id})">
+      <div class="producto-img">
+        <div class="producto-img-inner">
+          <div class="producto-icon">◈</div>
+        </div>
+        ${p.badge ? `<span class="producto-badge">${p.badge}</span>` : ''}
+      </div>
+      <p class="producto-name">${p.nombre}</p>
+      <p class="producto-material">${p.material}</p>
+      <p class="producto-precio">${formatPrecio(p.precio)}</p>
+    </div>
+  `).join('');
+}
+
+function agregarAlCarrito(id) {
+  const producto = productos.find(p => p.id === id);
+  const existente = carrito.find(i => i.id === id);
+  if (existente) {
+    existente.cantidad++;
+  } else {
+    carrito.push({ ...producto, cantidad: 1 });
+  }
+  actualizarCarritoUI();
+  abrirCarrito();
+}
+
+function eliminarDelCarrito(id) {
+  carrito = carrito.filter(i => i.id !== id);
+  actualizarCarritoUI();
+}
+
+function actualizarCarritoUI() {
+  const total = carrito.reduce((s, i) => s + i.precio * i.cantidad, 0);
+  const count = carrito.reduce((s, i) => s + i.cantidad, 0);
+
+  document.querySelector('.nav-cart').textContent = `Carrito (${count})`;
+
+  const itemsEl = document.getElementById('carrito-items');
+  const vacioEl = document.getElementById('carrito-vacio');
+  const footerEl = document.getElementById('carrito-footer');
+  const totalEl = document.getElementById('carrito-total');
+
+  if (carrito.length === 0) {
+    itemsEl.innerHTML = '<div class="carrito-vacio"><div class="carrito-vacio-icon">◯</div><p>Tu carrito está vacío</p></div>';
+    footerEl.style.display = 'none';
+  } else {
+    itemsEl.innerHTML = carrito.map(i => `
+      <div class="carrito-item">
+        <div class="carrito-item-img">◈</div>
+        <div class="carrito-item-info">
+          <p class="carrito-item-name">${i.nombre} × ${i.cantidad}</p>
+          <p class="carrito-item-precio">${formatPrecio(i.precio * i.cantidad)}</p>
+        </div>
+        <button class="carrito-item-remove" onclick="eliminarDelCarrito(${i.id})">✕</button>
+      </div>
+    `).join('');
+    footerEl.style.display = 'block';
+    totalEl.textContent = formatPrecio(total);
+  }
+}
+
+function abrirCarrito(e) {
+  if (e) e.preventDefault();
+  document.getElementById('carrito-overlay').classList.add('open');
+}
+
+function cerrarCarrito(e) {
+  if (e && e.target !== document.getElementById('carrito-overlay')) return;
+  document.getElementById('carrito-overlay').classList.remove('open');
+}
+
+renderProductos();
+</script>
+</body>
+</html>
