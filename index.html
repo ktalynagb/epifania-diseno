@@ -1196,20 +1196,17 @@ function actualizarCarritoUI() {
     totalEl.textContent = formatPrecio(total);
 
     wompiContainer.innerHTML = '';
-    const btn = document.createElement('button');
-    btn.className = 'btn-pagar';
-    btn.setAttribute('data-wompi-env', 'test');
-    btn.setAttribute('data-wompi-public-key', WOMPI_KEY);
-    btn.setAttribute('data-wompi-currency', 'COP');
-    btn.setAttribute('data-wompi-amount-in-cents', totalCentavos.toString());
-    btn.setAttribute('data-wompi-reference', generarRef());
-    btn.setAttribute('data-wompi-redirect-url', REDIRECT_URL);
-    btn.textContent = 'Pagar con PSE / Tarjeta';
-    wompiContainer.appendChild(btn);
-
-    if (window.WidgetCheckout) {
-      window.WidgetCheckout.init();
-    }
+    const ref = generarRef();
+    wompiContainer.innerHTML = `
+      <form action="https://checkout.wompi.co/p/" method="GET">
+        <input type="hidden" name="public-key" value="${WOMPI_KEY}" />
+        <input type="hidden" name="currency" value="COP" />
+        <input type="hidden" name="amount-in-cents" value="${totalCentavos}" />
+        <input type="hidden" name="reference" value="${ref}" />
+        <input type="hidden" name="redirect-url" value="${REDIRECT_URL}" />
+        <button type="submit" class="btn-pagar">Pagar con PSE / Tarjeta</button>
+      </form>
+    `;
   }
 }
 
