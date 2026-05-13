@@ -1105,22 +1105,16 @@
         <span class="carrito-total-label">Total</span>
         <span class="carrito-total-precio" id="carrito-total">$0</span>
       </div>
-      <script src="https://checkout.wompi.co/widget.js"></script>
-      <button
-        class="btn-pagar"
-        data-wompi-env="test"
-        data-wompi-public-key="pub_test_tTmhGEHyGkT7xpYMZFNUcFrWDRnCDOz9"
-        data-wompi-currency="COP"
-        data-wompi-amount-in-cents="id="wompi-amount""
-        data-wompi-reference="id="wompi-ref""
-        data-wompi-redirect-url="https://epifaniadiseno.netlify.app">
-        Pagar con PSE / Tarjeta
-      </button>
+      <div id="wompi-container"></div>
     </div>
   </div>
 </div>
 
+<script src="https://checkout.wompi.co/widget.js"></script>
 <script>
+const WOMPI_KEY = 'pub_test_tTmhGEHyGkT7xpYMZFNUcFrWDRnCDOz9';
+const REDIRECT_URL = 'https://epifaniadiseno.netlify.app';
+
 const productos = [
   { id: 1, nombre: 'Aretes Ojo', material: 'Bronce con baño en oro 24k', precio: 85000, badge: 'Nuevo' },
   { id: 2, nombre: 'Anillo Murralla', material: 'Bronce con baño en oro 24k · Piedra esmeralda', precio: 120000, badge: null },
@@ -1132,6 +1126,10 @@ let carrito = [];
 
 function formatPrecio(p) {
   return '$' + p.toLocaleString('es-CO');
+}
+
+function generarRef() {
+  return 'EPF-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
 }
 
 function renderProductos() {
@@ -1171,13 +1169,14 @@ function eliminarDelCarrito(id) {
 function actualizarCarritoUI() {
   const total = carrito.reduce((s, i) => s + i.precio * i.cantidad, 0);
   const count = carrito.reduce((s, i) => s + i.cantidad, 0);
+  const totalCentavos = total * 100;
 
   document.querySelector('.nav-cart').textContent = `Carrito (${count})`;
 
   const itemsEl = document.getElementById('carrito-items');
-  const vacioEl = document.getElementById('carrito-vacio');
   const footerEl = document.getElementById('carrito-footer');
   const totalEl = document.getElementById('carrito-total');
+  const wompiContainer = document.getElementById('wompi-container');
 
   if (carrito.length === 0) {
     itemsEl.innerHTML = '<div class="carrito-vacio"><div class="carrito-vacio-icon">◯</div><p>Tu carrito está vacío</p></div>';
@@ -1195,6 +1194,22 @@ function actualizarCarritoUI() {
     `).join('');
     footerEl.style.display = 'block';
     totalEl.textContent = formatPrecio(total);
+
+    wompiContainer.innerHTML = '';
+    const btn = document.createElement('button');
+    btn.className = 'btn-pagar';
+    btn.setAttribute('data-wompi-env', 'test');
+    btn.setAttribute('data-wompi-public-key', WOMPI_KEY);
+    btn.setAttribute('data-wompi-currency', 'COP');
+    btn.setAttribute('data-wompi-amount-in-cents', totalCentavos.toString());
+    btn.setAttribute('data-wompi-reference', generarRef());
+    btn.setAttribute('data-wompi-redirect-url', REDIRECT_URL);
+    btn.textContent = 'Pagar con PSE / Tarjeta';
+    wompiContainer.appendChild(btn);
+
+    if (window.WidgetCheckout) {
+      window.WidgetCheckout.init();
+    }
   }
 }
 
