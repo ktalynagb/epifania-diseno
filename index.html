@@ -1105,7 +1105,17 @@
         <span class="carrito-total-label">Total</span>
         <span class="carrito-total-precio" id="carrito-total">$0</span>
       </div>
-      <button class="btn-pagar">Pagar con PSE / Tarjeta</button>
+      <script src="https://checkout.wompi.co/widget.js"></script>
+      <button
+        class="btn-pagar"
+        data-wompi-env="test"
+        data-wompi-public-key="pub_test_tTmhGEHyGkT7xpYMZFNUcFrWDRnCDOz9"
+        data-wompi-currency="COP"
+        data-wompi-amount-in-cents="id="wompi-amount""
+        data-wompi-reference="id="wompi-ref""
+        data-wompi-redirect-url="https://epifaniadiseno.netlify.app">
+        Pagar con PSE / Tarjeta
+      </button>
     </div>
   </div>
 </div>
