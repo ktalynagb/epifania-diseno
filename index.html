@@ -1318,9 +1318,10 @@ async function cargarProductos() {
   try {
     const res = await fetch(CSV_URL);
     const text = await res.text();
-    const filas = text.trim().split('\n').map(f => f.split(','));
+    const filas = parsearCSV(text);
     const headers = filas[0].map(h => h.trim());
     productos = filas.slice(1)
+      .filter(fila => fila.length > 1)
       .map(fila => {
         const obj = {};
         headers.forEach((h, i) => obj[h] = (fila[i] || '').trim());
@@ -1343,6 +1344,30 @@ async function cargarProductos() {
   }
 }
 
+function parsearCSV(text) {
+  const filas = [];
+  const lines = text.trim().split('\n');
+  lines.forEach(line => {
+    const fila = [];
+    let campo = '';
+    let enComillas = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (c === '"') {
+        enComillas = !enComillas;
+      } else if (c === ',' && !enComillas) {
+        fila.push(campo.trim());
+        campo = '';
+      } else {
+        campo += c;
+      }
+    }
+    fila.push(campo.trim());
+    filas.push(fila);
+  });
+  return filas;
+}
+
 function formatPrecio(p) {
   return '$' + p.toLocaleString('es-CO');
 }
@@ -1354,6 +1379,7 @@ function normalizarImagen(url) {
   if (match) return `https://i.imgur.com/${match[1]}.jpg`;
   return url;
 }
+function generarRef() {
   return 'EPF-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
 }
 
