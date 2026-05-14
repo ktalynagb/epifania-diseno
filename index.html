@@ -1307,24 +1307,23 @@
 <script>
 const WOMPI_KEY = 'pub_test_tTmhGEHyGkT7xpYMZFNUcFrWDRnCDOz9';
 const REDIRECT_URL = 'https://epifaniadiseno.netlify.app';
-const SHEETS_API_KEY = 'AIzaSyD8g2r66JLPzO4Tg16OiyTgPKDkZUgmaUI';
-const SHEET_ID = '16W5sjTrSu_1gJxbkXvBbKxdNtPW96oKTPjb0woHmm1Q';
-const SHEET_NAME = 'Hoja1';
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSEpPeLvjksbIO4d-neLIsGTVgWCu-baPT_lcabnprfW2vvJrnYAcBO8-8qw0Xuq-DBV_NZz0dPn8B-/pub?gid=0&single=true&output=csv';
 
 let productos = [];
 let carrito = [];
 
 async function cargarProductos() {
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${SHEETS_API_KEY}`;
+  const grid = document.getElementById('productos-grid');
+  grid.innerHTML = '<p style="color:var(--gris); font-size:0.85rem; grid-column:1/-1; text-align:center; padding:3rem 0;">Cargando colección...</p>';
   try {
-    const res = await fetch(url);
-    const data = await res.json();
-    const filas = data.values;
-    const headers = filas[0];
+    const res = await fetch(CSV_URL);
+    const text = await res.text();
+    const filas = text.trim().split('\n').map(f => f.split(','));
+    const headers = filas[0].map(h => h.trim());
     productos = filas.slice(1)
       .map(fila => {
         const obj = {};
-        headers.forEach((h, i) => obj[h] = fila[i] || '');
+        headers.forEach((h, i) => obj[h] = (fila[i] || '').trim());
         return obj;
       })
       .filter(p => p.activo === 'TRUE')
@@ -1339,7 +1338,7 @@ async function cargarProductos() {
     renderProductos();
   } catch (err) {
     console.error('Error cargando productos:', err);
-    document.getElementById('productos-grid').innerHTML = '<p style="color:var(--gris); font-size:0.85rem;">Error cargando productos. Intenta de nuevo.</p>';
+    grid.innerHTML = '<p style="color:var(--gris); font-size:0.85rem; grid-column:1/-1; text-align:center; padding:3rem 0;">Error cargando productos. Intenta de nuevo.</p>';
   }
 }
 
