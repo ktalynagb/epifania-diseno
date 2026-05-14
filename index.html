@@ -387,6 +387,179 @@
     font-weight: 400;
   }
 
+  /* MODAL PRODUCTO */
+  .producto-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 26, 24, 0.6);
+    z-index: 300;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .producto-modal-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .producto-modal {
+    background: var(--blanco);
+    max-width: 860px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    transform: translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    max-height: 90vh;
+    overflow: hidden;
+  }
+
+  .producto-modal-overlay.open .producto-modal {
+    transform: translateY(0);
+  }
+
+  .producto-modal-img {
+    background: var(--crema-oscura);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    position: relative;
+  }
+
+  .producto-modal-icon {
+    font-size: 6rem;
+    opacity: 0.2;
+    color: var(--verde);
+  }
+
+  .producto-modal-badge {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: var(--verde);
+    color: var(--crema);
+    padding: 0.35rem 0.75rem;
+  }
+
+  .producto-modal-info {
+    padding: 3rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow-y: auto;
+  }
+
+  .producto-modal-cerrar {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--gris);
+    transition: color 0.3s;
+    z-index: 10;
+  }
+
+  .producto-modal-cerrar:hover { color: var(--oscuro); }
+
+  .producto-modal-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 0.75rem;
+  }
+
+  .producto-modal-nombre {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: var(--oscuro);
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+  }
+
+  .producto-modal-material {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--gris);
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+  }
+
+  .producto-modal-precio {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: var(--oscuro);
+    margin-bottom: 2rem;
+  }
+
+  .producto-modal-precio span {
+    font-size: 0.75rem;
+    font-family: 'Jost', sans-serif;
+    color: var(--gris);
+    letter-spacing: 0.1em;
+    margin-left: 0.5rem;
+  }
+
+  .producto-modal-divider {
+    height: 0.5px;
+    background: var(--crema-oscura);
+    margin-bottom: 2rem;
+  }
+
+  .producto-modal-desc {
+    font-size: 0.82rem;
+    line-height: 1.9;
+    color: var(--gris);
+    margin-bottom: 2rem;
+  }
+
+  .btn-agregar {
+    width: 100%;
+    padding: 1.1rem;
+    background: var(--verde);
+    color: var(--crema);
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-bottom: 0.75rem;
+  }
+
+  .btn-agregar:hover { background: var(--verde-claro); }
+
+  .producto-modal-nota {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--gris);
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .producto-modal {
+      grid-template-columns: 1fr;
+      max-height: 95vh;
+      overflow-y: auto;
+    }
+    .producto-modal-img { min-height: 260px; }
+    .producto-modal-info { padding: 2rem 1.5rem; }
+  }
+
   /* BANNER */
   .banner {
     background: var(--verde);
@@ -1087,6 +1260,26 @@
   </div>
 </footer>
 
+<!-- MODAL PRODUCTO -->
+<div class="producto-modal-overlay" id="producto-modal-overlay" onclick="cerrarModal(event)">
+  <div class="producto-modal" id="producto-modal">
+    <button class="producto-modal-cerrar" onclick="cerrarModalBtn()">✕</button>
+    <div class="producto-modal-img" id="modal-img">
+      <div class="producto-modal-icon">◈</div>
+    </div>
+    <div class="producto-modal-info">
+      <p class="producto-modal-tag" id="modal-tag">Colección</p>
+      <h2 class="producto-modal-nombre" id="modal-nombre">Nombre</h2>
+      <p class="producto-modal-material" id="modal-material">Material</p>
+      <div class="producto-modal-divider"></div>
+      <p class="producto-modal-precio" id="modal-precio">$0 <span>COP</span></p>
+      <p class="producto-modal-desc" id="modal-desc">Pieza única elaborada en bronce con baño en oro 24k. Cada accesorio es diseñado y producido en Popayán, Colombia.</p>
+      <button class="btn-agregar" id="modal-btn-agregar">Agregar al carrito</button>
+      <p class="producto-modal-nota">✦ Envío a todo Colombia</p>
+    </div>
+  </div>
+</div>
+
 <!-- CARRITO -->
 <div class="carrito-overlay" id="carrito-overlay" onclick="cerrarCarrito(event)">
   <div class="carrito-sidebar">
@@ -1135,7 +1328,7 @@ function generarRef() {
 function renderProductos() {
   const grid = document.getElementById('productos-grid');
   grid.innerHTML = productos.map(p => `
-    <div class="producto-card" onclick="agregarAlCarrito(${p.id})">
+    <div class="producto-card" onclick="abrirModal(${p.id})">
       <div class="producto-img">
         <div class="producto-img-inner">
           <div class="producto-icon">◈</div>
@@ -1147,6 +1340,36 @@ function renderProductos() {
       <p class="producto-precio">${formatPrecio(p.precio)}</p>
     </div>
   `).join('');
+}
+
+function abrirModal(id) {
+  const p = productos.find(p => p.id === id);
+  document.getElementById('modal-tag').textContent = p.badge || 'Colección';
+  document.getElementById('modal-nombre').textContent = p.nombre;
+  document.getElementById('modal-material').textContent = p.material;
+  document.getElementById('modal-precio').innerHTML = formatPrecio(p.precio) + ' <span>COP</span>';
+  if (p.badge) {
+    document.getElementById('modal-img').innerHTML = `<div class="producto-modal-icon">◈</div><span class="producto-modal-badge">${p.badge}</span>`;
+  } else {
+    document.getElementById('modal-img').innerHTML = `<div class="producto-modal-icon">◈</div>`;
+  }
+  document.getElementById('modal-btn-agregar').onclick = () => {
+    agregarAlCarrito(id);
+    cerrarModalBtn();
+  };
+  document.getElementById('producto-modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function cerrarModalBtn() {
+  document.getElementById('producto-modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function cerrarModal(e) {
+  if (e.target === document.getElementById('producto-modal-overlay')) {
+    cerrarModalBtn();
+  }
 }
 
 function agregarAlCarrito(id) {
