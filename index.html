@@ -1334,7 +1334,7 @@ async function cargarProductos() {
         precio: parseInt(p.precio),
         badge: p.badge || null,
         descripcion: p.descripcion,
-        imagen: p.imagen || null
+        imagen: normalizarImagen(p.imagen || null)
       }));
     renderProductos();
   } catch (err) {
@@ -1347,7 +1347,13 @@ function formatPrecio(p) {
   return '$' + p.toLocaleString('es-CO');
 }
 
-function generarRef() {
+function normalizarImagen(url) {
+  if (!url) return null;
+  // Convierte https://imgur.com/XXXX a https://i.imgur.com/XXXX.jpg
+  const match = url.match(/imgur\.com\/(?!a\/)([a-zA-Z0-9]+)$/);
+  if (match) return `https://i.imgur.com/${match[1]}.jpg`;
+  return url;
+}
   return 'EPF-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
 }
 
