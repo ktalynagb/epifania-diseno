@@ -1333,7 +1333,8 @@ async function cargarProductos() {
         material: p.material,
         precio: parseInt(p.precio),
         badge: p.badge || null,
-        descripcion: p.descripcion
+        descripcion: p.descripcion,
+        imagen: p.imagen || null
       }));
     renderProductos();
   } catch (err) {
@@ -1356,7 +1357,10 @@ function renderProductos() {
     <div class="producto-card" onclick="abrirModal(${p.id})">
       <div class="producto-img">
         <div class="producto-img-inner">
-          <div class="producto-icon">◈</div>
+          ${p.imagen 
+            ? `<img src="${p.imagen}" alt="${p.nombre}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">`
+            : `<div class="producto-icon">◈</div>`
+          }
         </div>
         ${p.badge ? `<span class="producto-badge">${p.badge}</span>` : ''}
       </div>
@@ -1374,7 +1378,12 @@ function abrirModal(id) {
   document.getElementById('modal-material').textContent = p.material;
   document.getElementById('modal-precio').innerHTML = formatPrecio(p.precio) + ' <span>COP</span>';
   document.getElementById('modal-desc').textContent = p.descripcion || 'Pieza única elaborada en bronce con baño en oro 24k. Diseñada y producida en Popayán, Colombia.';
-  if (p.badge) {
+  if (p.imagen) {
+    document.getElementById('modal-img').innerHTML = `
+      <img src="${p.imagen}" alt="${p.nombre}" style="width:100%;height:100%;object-fit:cover;">
+      ${p.badge ? `<span class="producto-modal-badge">${p.badge}</span>` : ''}
+    `;
+  } else if (p.badge) {
     document.getElementById('modal-img').innerHTML = `<div class="producto-modal-icon">◈</div><span class="producto-modal-badge">${p.badge}</span>`;
   } else {
     document.getElementById('modal-img').innerHTML = `<div class="producto-modal-icon">◈</div>`;
