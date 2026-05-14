@@ -1307,15 +1307,41 @@
 <script>
 const WOMPI_KEY = 'pub_test_tTmhGEHyGkT7xpYMZFNUcFrWDRnCDOz9';
 const REDIRECT_URL = 'https://epifaniadiseno.netlify.app';
+const SHEETS_API_KEY = 'AIzaSyD8g2r66JLPzO4Tg16OiyTgPKDkZUgmaUI';
+const SHEET_ID = '16W5sjTrSu_1gJxbkXvBbKxdNtPW96oKTPjb0woHmm1Q';
+const SHEET_NAME = 'Hoja1';
 
-const productos = [
-  { id: 1, nombre: 'Aretes Ojo', material: 'Bronce con baño en oro 24k', precio: 85000, badge: 'Nuevo' },
-  { id: 2, nombre: 'Anillo Murralla', material: 'Bronce con baño en oro 24k · Piedra esmeralda', precio: 120000, badge: null },
-  { id: 3, nombre: 'Gargantilla Snake', material: 'Bronce con baño en oro 24k', precio: 95000, badge: 'Favorito' },
-  { id: 4, nombre: 'Anillo Sphere', material: 'Bronce con baño en oro 24k', precio: 110000, badge: null },
-];
-
+let productos = [];
 let carrito = [];
+
+async function cargarProductos() {
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${SHEETS_API_KEY}`;
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    const filas = data.values;
+    const headers = filas[0];
+    productos = filas.slice(1)
+      .map(fila => {
+        const obj = {};
+        headers.forEach((h, i) => obj[h] = fila[i] || '');
+        return obj;
+      })
+      .filter(p => p.activo === 'TRUE')
+      .map(p => ({
+        id: parseInt(p.id),
+        nombre: p.nombre,
+        material: p.material,
+        precio: parseInt(p.precio),
+        badge: p.badge || null,
+        descripcion: p.descripcion
+      }));
+    renderProductos();
+  } catch (err) {
+    console.error('Error cargando productos:', err);
+    document.getElementById('productos-grid').innerHTML = '<p style="color:var(--gris); font-size:0.85rem;">Error cargando productos. Intenta de nuevo.</p>';
+  }
+}
 
 function formatPrecio(p) {
   return '$' + p.toLocaleString('es-CO');
@@ -1348,6 +1374,7 @@ function abrirModal(id) {
   document.getElementById('modal-nombre').textContent = p.nombre;
   document.getElementById('modal-material').textContent = p.material;
   document.getElementById('modal-precio').innerHTML = formatPrecio(p.precio) + ' <span>COP</span>';
+  document.getElementById('modal-desc').textContent = p.descripcion || 'Pieza única elaborada en bronce con baño en oro 24k. Diseñada y producida en Popayán, Colombia.';
   if (p.badge) {
     document.getElementById('modal-img').innerHTML = `<div class="producto-modal-icon">◈</div><span class="producto-modal-badge">${p.badge}</span>`;
   } else {
@@ -1443,7 +1470,7 @@ function cerrarCarrito(e) {
   document.getElementById('carrito-overlay').classList.remove('open');
 }
 
-renderProductos();
+cargarProductos();
 </script>
 </body>
 </html>
